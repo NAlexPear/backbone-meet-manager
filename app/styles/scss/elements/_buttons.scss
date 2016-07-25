@@ -4,4 +4,13 @@ input[type='button'],
 input[type='reset'],
 input[type='submit']{
     background-color: $color-main;
+    border-color: $color-main;
+}
+
+.button.button-outline,
+button.button-outline,
+input[type='button'].button-outline,
+input[type='reset'].button-outline,
+input[type='submit'].button-outline{
+    color: $color-main;
 }

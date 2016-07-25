@@ -3,6 +3,7 @@ import Backbone from "backbone";
 import _ from "underscore";
 
 // Backbone Components
+import LoginView from "../components/login";
 import UserCounterView from "../components/user-counter";
 
 // Internal Components
@@ -17,12 +18,17 @@ var LandingPageView = Backbone.View.extend( {
     "render": function render(){
         this.$el.html( this.template( {
             "heading": "Meet Manager",
-            "content": "Admin Page"
+            "content": "Welcome to Meet Manager"
         } ) );
 
-        this.addUserCounter();
+        this.addLogin();
 
         return this;
+    },
+    "addLogin": function addLoginPrompt(){
+        var loginPrompt = new LoginView();
+
+        this.$el.append( loginPrompt.$el );
     },
     "addUserCounter": function addUserCounter(){
         var userCounter = new UserCounterView();

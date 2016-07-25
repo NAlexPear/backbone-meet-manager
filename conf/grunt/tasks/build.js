@@ -3,7 +3,7 @@ module.exports = function gruntServe( grunt ){
 
     grunt.registerTask( "build", [
         "clean:dist",
-        // "sass",
+        "sass",
         "useminPrepare",
         "imagemin",
         "htmlmin",

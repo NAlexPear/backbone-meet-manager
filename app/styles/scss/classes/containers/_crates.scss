@@ -1,0 +1,24 @@
+.crate{
+    padding: $standard-padding;
+    border-radius: $standard-padding;
+
+    .heading{
+        align-items: center;
+        padding: $standard-padding 0;
+
+        .label{
+            padding-right: $standard-padding;
+            margin: 0;
+        }
+
+        button{
+            margin: 0;
+        }
+    }
+}
+
+.login{
+    width: 90%;
+    max-width: 0.9 * $tablet;
+    margin: auto;
+}

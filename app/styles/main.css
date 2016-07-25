@@ -1,0 +1,35 @@
+.button,
+button,
+input[type='button'],
+input[type='reset'],
+input[type='submit'] {
+  background-color: #3f3fa6;
+  border-color: #3f3fa6; }
+
+.button.button-outline,
+button.button-outline,
+input[type='button'].button-outline,
+input[type='reset'].button-outline,
+input[type='submit'].button-outline {
+  color: #3f3fa6; }
+
+.crate {
+  padding: 1rem;
+  border-radius: 1rem; }
+  .crate .heading {
+    align-items: center;
+    padding: 1rem 0; }
+    .crate .heading .label {
+      padding-right: 1rem;
+      margin: 0; }
+    .crate .heading button {
+      margin: 0; }
+
+.login {
+  width: 90%;
+  max-width: 630px;
+  margin: auto; }
+
+.row {
+  flex-direction: row;
+  margin: 0; }
