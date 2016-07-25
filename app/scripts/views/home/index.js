@@ -28,6 +28,12 @@ var LandingPageView = Backbone.View.extend( {
     "addLogin": function addLoginPrompt(){
         var loginPrompt = new LoginView();
 
+        this.listenTo(
+            loginPrompt.collection,
+            "remove:login",
+            this.addUserCounter
+        );
+
         this.$el.append( loginPrompt.$el );
     },
     "addUserCounter": function addUserCounter(){
