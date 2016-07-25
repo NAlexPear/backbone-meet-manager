@@ -18,11 +18,13 @@ var query;
 client.connect();
 
 query = client.query(
-            "CREATE TYPE gender AS ENUM ('male', 'female', 'other');" +
+            "CREATE EXTENSION IF NOT EXISTS citext WITH SCHEMA public;" +
             "CREATE TABLE users(" +
-            "id SERIAL PRIMARY KEY," +
-            "name VARCHAR(40) not null," +
-            "gender gender);"
+                "id             SERIAL          PRIMARY KEY," +
+                "username       CITEXT          not null," +
+                "email          CITEXT                  ," +
+                "password       VARCHAR(20)     not null" +
+            ");"
         );
 
 query.on( "end", () => client.end() );
