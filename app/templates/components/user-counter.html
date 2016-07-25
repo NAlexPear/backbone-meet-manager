@@ -5,10 +5,10 @@
         <thead>
             <tr>
                 <td>
-                    Name:
+                    Username:
                 </td>
                 <td>
-                    Gender:
+                    Email:
                 </td>
                 <td>
 
@@ -22,12 +22,10 @@
 <div>
     <h4>Add User:</h4>
     <form class="add-user">
-        <input class="name" type="text" name="name" placeholder="Full Name" required>
-        <select class="gender" name="gender" required>
-            <option value="male">male</option>
-            <option value="female">female</option>
-            <option value="other">other</option>
-        </select>
+        <input class="username" type="text" name="username" placeholder="Username" required>
+        <input class="password" type="password" name="password" placeholder="password" required>
+        <input class="email" type="email" name="email" placeholder="email@example.com" required>
+
         <input type="submit" name="submit-user">
     </form>
 </div>

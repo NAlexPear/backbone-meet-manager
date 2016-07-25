@@ -16,7 +16,7 @@ var LandingPageView = Backbone.View.extend( {
     },
     "render": function render(){
         this.$el.html( this.template( {
-            "content": "Welcome to your future landing page!"
+            "content": "Welcome to Meet Manager"
         } ) );
 
         this.addUserCounter();

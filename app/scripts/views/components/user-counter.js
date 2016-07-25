@@ -17,8 +17,9 @@ var UserCounterView = Backbone.View.extend( {
     "events": {
         "submit form.add-user": function submitUser( event ){
             var model = new UserModel( {
-                "name": $( ".name" ).val(),
-                "gender": $( ".gender" ).val()
+                "username": $( ".username" ).val(),
+                "email": $( ".email" ).val(),
+                "password": $( ".password" ).val()
             } );
 
             event.preventDefault();

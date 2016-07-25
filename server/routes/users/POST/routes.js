@@ -19,8 +19,9 @@ module.exports = function handleUserPost( req, res ){
 
     // get data through http request
     var data = {
-        "name": req.body.name,
-        "gender": req.body.gender
+        "username": req.body.username,
+        "email": req.body.email,
+        "password": req.body.password
     };
 
     // set up universal error handler
@@ -45,8 +46,8 @@ module.exports = function handleUserPost( req, res ){
             }
 
             client.query(
-                "INSERT INTO users(name, gender) values($1, $2)",
-                [ data.name, data.gender ]
+                "INSERT INTO users(username, email, password) values($1, $2, $3)",
+                [ data.username, data.email, data.password ]
             );
 
             query = client.query(

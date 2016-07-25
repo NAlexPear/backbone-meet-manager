@@ -25,8 +25,9 @@ var UserCounterView = Backbone.View.extend( {
     },
     "render": function render(){
         this.$el.html( this.template( {
-            "name": this.model.get( "name" ),
-            "gender": this.model.get( "gender" )
+            "username": this.model.get( "username" ),
+            "email": this.model.get( "email" ),
+            "password": this.model.get( "password" )
         } ) );
 
         return this;

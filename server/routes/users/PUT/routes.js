@@ -22,8 +22,8 @@ module.exports = function handleUserUpdate( req, res ){
 
     // compile data from the http request
     var data = {
-        "name": req.body.name,
-        "gender": req.body.gender
+        "username": req.body.username,
+        "email": req.body.email
     };
 
     // set up universal error handler
@@ -48,8 +48,8 @@ module.exports = function handleUserUpdate( req, res ){
             }
 
             client.query(
-                "UPDATE users SET name=($1), gender=($2) WHERE id=($3);",
-                [ data.name, data.gender, id ]
+                "UPDATE users SET username=($1), email=($2) WHERE id=($3);",
+                [ data.username, data.email, id ]
             );
 
             query = client.query(
