@@ -5,6 +5,7 @@ import _ from "underscore";
 // Backbone Components
 import LoginView from "../components/login";
 import UserCounterView from "../components/user-counter";
+import MeetCounterView from "../components/meet-counter";
 
 // Internal Components
 import template from "text!template/default.html";
@@ -31,7 +32,7 @@ var LandingPageView = Backbone.View.extend( {
         this.listenTo(
             loginPrompt.collection,
             "remove:login",
-            this.addUserCounter
+            this.addMeetCounter
         );
 
         this.$el.append( loginPrompt.$el );
@@ -40,6 +41,11 @@ var LandingPageView = Backbone.View.extend( {
         var userCounter = new UserCounterView();
 
         this.$el.append( userCounter.$el );
+    },
+    "addMeetCounter": function addMeetCounter(){
+        var meetCounter = new MeetCounterView();
+
+        this.$el.append( meetCounter.$el );
     }
 } );
 
