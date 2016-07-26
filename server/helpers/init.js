@@ -23,7 +23,7 @@ query = client.query(
                 "id             SERIAL          PRIMARY KEY," +
                 "username       CITEXT          not null," +
                 "email          CITEXT                  ," +
-                "password       VARCHAR(20)     not null" +
+                "password       TEXT            not null" +
             ");"
         );
 

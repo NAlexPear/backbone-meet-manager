@@ -2,6 +2,7 @@
 import Epoxy from "epoxy";
 import _ from "underscore";
 import $ from "jquery";
+import bcrypt from "bcrypt";
 
 // Backbone Components
 import UserCollection from "../../collections/users";
@@ -40,20 +41,26 @@ var LoginView = Epoxy.View.extend( {
             this.toggleNewUser();
         },
         "click input.prompt": function handleFormSubmission( event ){
-            var model = new UserModel( {
-                "username": $( ".username" ).val(),
-                "password": $( ".password" ).val()
-            } );
+            var password = $( ".password" ).val();
 
             event.preventDefault();
 
-            if( this.viewModel.get( "isNewUser" ) ){
-                model.set( "email", $( ".email" ).val() );
-                this.addNewUser( model );
-            }
-            else{
-                this.validateLogin( model );
-            }
+            bcrypt.genSalt( 10, ( error, salt ) => {
+                bcrypt.hash( password, salt, ( hasherror, hash ) => {
+                    var model = new UserModel( {
+                        "username": $( ".username" ).val(),
+                        "password": hash
+                    } );
+
+                    if( this.viewModel.get( "isNewUser" ) ){
+                        model.set( "email", $( ".email" ).val() );
+                        this.addNewUser( model );
+                    }
+                    else{
+                        this.validateLogin( model.get( "username" ), password );
+                    }
+                } );
+            } );
         }
     },
     "initialize": function initialize(){
@@ -91,24 +98,25 @@ var LoginView = Epoxy.View.extend( {
             }
         } );
     },
-    "validateLogin": function validateLogin( data ){
+    "validateLogin": function validateLogin( username, password ){
         var users = this.collection.models;
-        var formData = {
-            "username": data.get( "username" ),
-            "password": data.get( "password" )
-        };
+
+        function comparePasswords( userModel ){
+            bcrypt.compare(
+                password,
+                userModel.get( "password" ),
+                function handleValidation( error, result ){
+                    var sameUser = username === userModel.get( "username" );
+
+                    if( result && sameUser ){
+                        userModel.trigger( "remove:login" );
+                    }
+                }
+            );
+        }
 
         _( users ).each(
-            ( user ) => {
-                var userData = {
-                    "username": user.get( "username" ),
-                    "password": user.get( "password" )
-                };
-
-                if( _( formData ).isEqual( userData ) ){
-                    user.trigger( "remove:login" );
-                }
-            }
+            ( user ) => comparePasswords( user )
         );
     }
 } );
