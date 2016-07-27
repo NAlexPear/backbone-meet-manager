@@ -1,12 +1,11 @@
 // Libraries and Modules
 import Backbone from "backbone";
 import _ from "underscore";
-import $ from "jquery";
 
 // Backbone Components
 import MeetCollection from "../../collections/meets";
-import MeetModel from "../../models/meet";
 import MeetListItemView from "./meet-list-item";
+import MeetAdderView from "./meet-adder";
 
 // Internal Components
 import template from "text!template/components/meet-counter.html";
@@ -14,21 +13,12 @@ import template from "text!template/components/meet-counter.html";
 var MeetCounterView = Backbone.View.extend( {
     "className": "meet-counter",
     "template": _.template( template ),
-    "events": {
-        "submit form.add-meet": function submitMeet( event ){
-            var model = new MeetModel( {
-                "name": $( ".name" ).val(),
-                "date": $( ".date" ).val()
-            } );
-
-            event.preventDefault();
-
-            this.collection.add( model );
-            this.listMeet( model );
-        }
-    },
+    "events": {},
     "initialize": function initialize(){
         this.collection = new MeetCollection();
+        this.adder = new MeetAdderView( {
+            "collection": this.collection
+        } );
 
         this.listenTo(
             this.collection,
@@ -53,6 +43,7 @@ var MeetCounterView = Backbone.View.extend( {
         this.$el.html( this.template() );
 
         this.listAllMeets();
+        this.adder.addtoTarget( this.$el );
 
         return this;
     },
@@ -71,8 +62,6 @@ var MeetCounterView = Backbone.View.extend( {
         var listItem = new MeetListItemView( {
             "model": model
         } );
-
-        model.save();
 
         listItem.appendToTargetList(
             this.$el.find( "tbody.meet-list" )
