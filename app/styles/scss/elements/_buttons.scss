@@ -5,6 +5,16 @@ input[type='reset'],
 input[type='submit']{
     background-color: $color-main;
     border-color: $color-main;
+
+    &.delete,
+    &.cancel{
+        background-color: $color-error;
+        border-color: $color-error;
+    }
+    &.save{
+        background-color: $color-ok;
+        border-color: $color-ok;
+    }
 }
 
 .button.button-outline,

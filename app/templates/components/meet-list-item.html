@@ -1,9 +1,11 @@
-<td>
-    <%= name %>
+<td class="name"></td>
+<td class="date">
+    <input class="new-date" type="date" name="date">
+    <span class="current-date"></span>
 </td>
 <td>
-    <%= date %>
-</td>
-<td>
-    <button class="delete" type="button" name="delete-meet">Remove Meet</button>
+    <button class="save" type="button" name="save-meet">Save</button>
+    <button class="cancel" type="button" name="revert-meet">Cancel</button>
+    <button class="edit" type="button" name="edit-meet">Edit</button>
+    <button class="delete" type="button" name="delete-meet">Remove</button>
 </td>

@@ -5,6 +5,24 @@ input[type='reset'],
 input[type='submit'] {
   background-color: #3f3fa6;
   border-color: #3f3fa6; }
+  .button.delete, .button.cancel,
+  button.delete,
+  button.cancel,
+  input[type='button'].delete,
+  input[type='button'].cancel,
+  input[type='reset'].delete,
+  input[type='reset'].cancel,
+  input[type='submit'].delete,
+  input[type='submit'].cancel {
+    background-color: #b71515;
+    border-color: #b71515; }
+  .button.save,
+  button.save,
+  input[type='button'].save,
+  input[type='reset'].save,
+  input[type='submit'].save {
+    background-color: #00cc60;
+    border-color: #00cc60; }
 
 .button.button-outline,
 button.button-outline,
@@ -49,6 +67,10 @@ select {
 input[type='date'] {
   font-family: Arial, sans-serif; }
 
+td input,
+td button {
+  margin: 0; }
+
 .crate {
   padding: 1rem;
   border-radius: 1rem; }
@@ -69,3 +91,6 @@ input[type='date'] {
 .row {
   flex-direction: row;
   margin: 0; }
+
+.disabled {
+  opacity: 0.3; }

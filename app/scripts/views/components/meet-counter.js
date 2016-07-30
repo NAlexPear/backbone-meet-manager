@@ -15,6 +15,7 @@ var MeetCounterView = Backbone.View.extend( {
     "template": _.template( template ),
     "events": {},
     "initialize": function initialize(){
+        this.children = [];
         this.collection = new MeetCollection();
         this.adder = new MeetAdderView( {
             "collection": this.collection
@@ -24,7 +25,9 @@ var MeetCounterView = Backbone.View.extend( {
             this.collection,
             "remove:meet",
             function handleRemoveMeetEvent( data ){
+                this.children = _( this.children ).without( data.view );
                 data.view.remove();
+
                 data.model.destroy( {
                     "wait": true
                 } );
@@ -35,6 +38,44 @@ var MeetCounterView = Backbone.View.extend( {
             this.collection,
             "list:meet",
             ( data ) => this.listMeet( data.model )
+        );
+
+        this.listenTo(
+            this.collection,
+            "editing:meet",
+            function handleEditingMeetEvent( data ){
+                var otherMeets = _( this.children ).without( data.view );
+
+                _( otherMeets ).each(
+                    ( meet ) => meet.disable()
+                );
+            }
+        );
+
+        this.listenTo(
+            this.collection,
+            "revert:meet",
+            function handleStopEditingMeetEvent( data ){
+                var otherMeets = _( this.children ).without( data.view );
+
+                _( otherMeets ).each(
+                    ( meet ) => meet.enable()
+                );
+            }
+        );
+
+        this.listenTo(
+            this.collection,
+            "save:meet",
+            function handleSaveMeetEvent( data ){
+                data.view.model.save( data.newData, {
+                    "success": function onModelSave(){
+                        data.view.model.trigger( "revert:meet", {
+                            "view": data.view
+                        } );
+                    }
+                } );
+            }
         );
 
         this.render();
@@ -62,6 +103,8 @@ var MeetCounterView = Backbone.View.extend( {
         var listItem = new MeetListItemView( {
             "model": model
         } );
+
+        this.children.push( listItem );
 
         listItem.appendToTargetList(
             this.$el.find( "tbody.meet-list" )

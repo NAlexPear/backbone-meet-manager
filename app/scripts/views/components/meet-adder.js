@@ -1,7 +1,6 @@
 // Libraries and Modules
 import Backbone from "backbone";
 import _ from "underscore";
-import $ from "jquery";
 
 // Backbone Components
 import MeetModel from "../../models/meet";
@@ -15,8 +14,8 @@ var MeetAdderView = Backbone.View.extend( {
     "events": {
         "submit form.add-meet": function submitMeet( event ){
             var model = new MeetModel( {
-                "name": $( ".name" ).val(),
-                "date": $( ".date" ).val()
+                "name": this.$el.find( ".name" ).val(),
+                "date": this.$el.find( ".date" ).val()
             } );
 
             event.preventDefault();
