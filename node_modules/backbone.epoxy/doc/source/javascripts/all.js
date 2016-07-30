@@ -1,6 +1,0 @@
-//= require "jquery"
-//= require "underscore"
-//= require "backbone"
-//= require "backbone-localstorage"
-//= require "backbone.epoxy"
-//= require "global"
