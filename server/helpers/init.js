@@ -19,11 +19,17 @@ client.connect();
 
 query = client.query(
             "CREATE EXTENSION IF NOT EXISTS citext WITH SCHEMA public;" +
-            "CREATE TABLE users(" +
+            "CREATE TABLE IF NOT EXISTS users(" +
                 "id             SERIAL          PRIMARY KEY," +
                 "username       CITEXT          not null," +
                 "email          CITEXT                  ," +
                 "password       TEXT            not null" +
+            ");" +
+            "CREATE TABLE IF NOT EXISTS meets(" +
+                "id             SERIAL          PRIMARY KEY," +
+                "name           TEXT            not null," +
+                "date           DATE            not null," +
+                "adminId        SMALLINT        not null" +
             ");"
         );
 
