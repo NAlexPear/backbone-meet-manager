@@ -57,7 +57,10 @@ var LoginView = Epoxy.View.extend( {
                         this.addNewUser( model );
                     }
                     else{
-                        this.validateLogin( model.get( "username" ), password );
+                        this.validateLogin(
+                            model.get( "username" ),
+                            password
+                        );
                     }
                 } );
             } );
@@ -99,24 +102,14 @@ var LoginView = Epoxy.View.extend( {
         } );
     },
     "validateLogin": function validateLogin( username, password ){
-        var users = this.collection.models;
-
-        function comparePasswords( userModel ){
-            bcrypt.compare(
-                password,
-                userModel.get( "password" ),
-                function handleValidation( error, result ){
-                    var sameUser = username === userModel.get( "username" );
-
-                    if( result && sameUser ){
-                        userModel.trigger( "remove:login" );
-                    }
-                }
-            );
-        }
-
-        _( users ).each(
-            ( user ) => comparePasswords( user )
+        /* eslint-disable no-console */
+        $.ajax(
+            "http://localhost:3000/test/login",
+            {
+                "username": username,
+                "password": password
+            },
+            ( data ) => console.log( data )
         );
     }
 } );
