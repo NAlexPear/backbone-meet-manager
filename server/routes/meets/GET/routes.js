@@ -17,6 +17,13 @@ var connectionString = process.env.DATABASE_URL || configUrl;
 module.exports = function handleUserRequest( req, res ){
     var results = [];
 
+    // grab data from the url params
+    var id;
+
+    if( req.params ){
+        id = req.params.meet_id;
+    }
+
     // set up universal error handler
     function handleError( error, done ){
         done();
@@ -34,13 +41,22 @@ module.exports = function handleUserRequest( req, res ){
         function handleConnection( error, client, done ){
             var query;
 
+
             if( error ){
                 handleError( error, done );
             }
 
-            query = client.query(
-                "SELECT * FROM meets ORDER BY id ASC;"
-            );
+            if( id ){
+                query = client.query(
+                    "SELECT * FROM meets WHERE adminId=($1) ORDER BY id ASC;",
+                    [ id ]
+                );
+            }
+            else{
+                query = client.query(
+                    "SELECT * FROM meets ORDER BY id ASC;"
+                );
+            }
 
             query.on(
                 "row",

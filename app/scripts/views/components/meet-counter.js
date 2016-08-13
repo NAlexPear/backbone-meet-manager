@@ -14,9 +14,9 @@ var MeetCounterView = Backbone.View.extend( {
     "className": "meet-counter",
     "template": _.template( template ),
     "events": {},
-    "initialize": function initialize(){
+    "initialize": function initialize( userId ){
         this.children = [];
-        this.collection = new MeetCollection();
+        this.collection = new MeetCollection( { "id": userId } );
         this.adder = new MeetAdderView( {
             "collection": this.collection
         } );

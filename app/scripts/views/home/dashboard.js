@@ -12,9 +12,8 @@ var LandingPageView = Backbone.View.extend( {
     "className": "content",
     "template": _.template( template ),
     "initialize": function initialize( userId ){
-        /* eslint-disable no-console */
-        console.log( userId );
-        
+        this.user = userId;
+
         this.render();
     },
     "render": function render(){
@@ -28,7 +27,7 @@ var LandingPageView = Backbone.View.extend( {
         return this;
     },
     "addMeetCounter": function addMeetCounter(){
-        var meetCounter = new MeetCounterView();
+        var meetCounter = new MeetCounterView( this.user );
 
         this.$el.append( meetCounter.$el );
     }

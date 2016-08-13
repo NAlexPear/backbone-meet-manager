@@ -13,6 +13,7 @@ router.route( "/" )
     .post( post );
 
 router.route( "/:meet_id" )
+    .get( read )
     .put( update )
     .delete( remove );
 
