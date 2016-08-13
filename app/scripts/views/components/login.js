@@ -95,7 +95,7 @@ var LoginView = Epoxy.View.extend( {
 
         $.ajax( {
             "type": "GET",
-            "url": "http://localhost:3000/test/login",
+            "url": "http://localhost:3000/api/v1/login",
             "dataType": "json",
             "headers": {
                 "Authorization": "Basic " + btoa( `${username}:${password}` )
