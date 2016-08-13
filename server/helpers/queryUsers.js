@@ -34,7 +34,11 @@ function queryUsersByUsername( username, callback ){
 
     query.on(
         "error",
-        ( error ) => console.log( error.error )
+        ( error ) => {
+            console.log( error );
+
+            client.end();
+        }
     );
 
     query.on(
@@ -50,7 +54,7 @@ function queryUsersByUsername( username, callback ){
                 else{
                     user = result.rows[ 0 ];
                 }
-                
+
                 callback( error, user );
             }
 

@@ -1,23 +1,36 @@
 // Libraries and Modules
 import $ from "jquery";
+import Backbone from "backbone";
 
 // Internal Components
-import LandingPageView from "views/home/index";
+import LoginPageView from "views/home/index";
+import DashboardPageView from "views/home/dashboard";
 
-var routes = {
-    "/": LandingPageView
-};
+var Workspace = Backbone.Router.extend( {
+    "routes": {
+        "dashboard/:userId": "dashboard"
+    },
+
+    "dashboard": function viewDashboard( userId ){
+        var dashboard = new DashboardPageView( userId );
+
+        $( "#container" ).html( dashboard.$el );
+    }
+} );
+
 
 var App = function App(){
-    this.load = function loadRoute( route ){
-        var Page = routes[ route ];
-        var pageView = new Page();
+    this.load = function loadInitialPage(){
+        var pageView = new LoginPageView();
 
         $( "#container" ).html( pageView.$el );
     };
     this.start = function startApplication(){
-        this.load( "/" );
+        this.load();
+        Backbone.history.start( { "pushState": true } );
     };
 };
+
+window.router = new Workspace();
 
 export default App;

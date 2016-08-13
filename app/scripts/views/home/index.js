@@ -4,8 +4,6 @@ import _ from "underscore";
 
 // Backbone Components
 import LoginView from "../components/login";
-import UserCounterView from "../components/user-counter";
-import MeetCounterView from "../components/meet-counter";
 
 // Internal Components
 import template from "text!template/default.html";
@@ -18,8 +16,8 @@ var LandingPageView = Backbone.View.extend( {
     },
     "render": function render(){
         this.$el.html( this.template( {
-            "heading": "Meet Manager",
-            "content": "Welcome to Meet Manager"
+            "heading": "",
+            "content": ""
         } ) );
 
         this.addLogin();
@@ -32,20 +30,16 @@ var LandingPageView = Backbone.View.extend( {
         this.listenTo(
             loginPrompt.viewModel,
             "remove:login",
-            this.addMeetCounter
+            ( userId ) => this.navigateToDashboard( userId )
         );
 
         this.$el.append( loginPrompt.$el );
     },
-    "addUserCounter": function addUserCounter(){
-        var userCounter = new UserCounterView();
-
-        this.$el.append( userCounter.$el );
-    },
-    "addMeetCounter": function addMeetCounter(){
-        var meetCounter = new MeetCounterView();
-
-        this.$el.append( meetCounter.$el );
+    "navigateToDashboard": function navigateToDashboard( userId ){
+        window.router.navigate(
+            `/dashboard/${userId}`,
+            { "trigger": true }
+        );
     }
 } );
 

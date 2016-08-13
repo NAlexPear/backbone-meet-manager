@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+/* eslint-disable no-console, complexity */
 "use strict";
 
 // Express Application
@@ -6,6 +6,7 @@ var express = require( "express" );
 var app = express();
 var bodyParser = require( "body-parser" );
 var router = require( "./routes/router.js" );
+
 
 app.use( bodyParser.urlencoded( {
     "extended": true

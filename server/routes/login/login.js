@@ -33,7 +33,8 @@ router.route( "/" ).get(
     function handleAuthentication( req, res ){
         res.json( {
             "username": req.user.username,
-            "email": req.user.email
+            "email": req.user.email,
+            "id": req.user.id
         } );
     }
 );

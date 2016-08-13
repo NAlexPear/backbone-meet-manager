@@ -83,8 +83,8 @@ var LoginView = Epoxy.View.extend( {
         var viewModel = this.viewModel;
 
         user.save( {}, {
-            "success": function successfullyAddUser(){
-                viewModel.trigger( "remove:login" );
+            "success": function successfullyAddUser( data ){
+                viewModel.trigger( "remove:login", data.id );
             }
         } );
     },
@@ -100,7 +100,7 @@ var LoginView = Epoxy.View.extend( {
             "headers": {
                 "Authorization": "Basic " + btoa( `${username}:${password}` )
             },
-            "success": ( data ) => viewModel.trigger( "remove:login", data )
+            "success": ( data ) => viewModel.trigger( "remove:login", data.id )
         } );
     }
 } );
