@@ -30,7 +30,7 @@ var LandingPageView = Backbone.View.extend( {
         var loginPrompt = new LoginView();
 
         this.listenTo(
-            loginPrompt.collection,
+            loginPrompt.viewModel,
             "remove:login",
             this.addMeetCounter
         );

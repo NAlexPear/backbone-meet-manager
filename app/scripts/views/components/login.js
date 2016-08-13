@@ -2,10 +2,9 @@
 import Epoxy from "epoxy";
 import _ from "underscore";
 import $ from "jquery";
-import bcrypt from "bcrypt";
+// import bcrypt from "bcrypt";
 
 // Backbone Components
-import UserCollection from "../../collections/users";
 import UserModel from "../../models/user";
 
 // Internal Components
@@ -41,41 +40,29 @@ var LoginView = Epoxy.View.extend( {
             this.toggleNewUser();
         },
         "click input.prompt": function handleFormSubmission( event ){
-            var password = $( ".password" ).val();
+            var model = new UserModel( {
+                "username": $( ".username" ).val(),
+                "password": $( ".password" ).val()
+            } );
 
             event.preventDefault();
 
-            bcrypt.genSalt( 10, ( error, salt ) => {
-                bcrypt.hash( password, salt, ( hasherror, hash ) => {
-                    var model = new UserModel( {
-                        "username": $( ".username" ).val(),
-                        "password": hash
-                    } );
-
-                    if( this.viewModel.get( "isNewUser" ) ){
-                        model.set( "email", $( ".email" ).val() );
-                        this.addNewUser( model );
-                    }
-                    else{
-                        this.validateLogin(
-                            model.get( "username" ),
-                            password
-                        );
-                    }
-                } );
-            } );
+            if( this.viewModel.get( "isNewUser" ) ){
+                model.set( "email", $( ".email" ).val() );
+                this.addNewUser( model );
+            }
+            else{
+                this.validateLogin( model );
+            }
         }
     },
     "initialize": function initialize(){
-        this.collection = new UserCollection();
-        this.collection.fetch();
-
         this.viewModel = new Epoxy.Model( {
             "isNewUser": false
         } );
 
         this.listenTo(
-            this.collection,
+            this.viewModel,
             "remove:login",
             this.remove
         );
@@ -93,24 +80,28 @@ var LoginView = Epoxy.View.extend( {
         this.viewModel.set( "isNewUser", !newUserState );
     },
     "addNewUser": function addNewUser( user ){
-        this.collection.add( user );
+        var viewModel = this.viewModel;
 
         user.save( {}, {
             "success": function successfullyAddUser(){
-                user.trigger( "remove:login" );
+                viewModel.trigger( "remove:login" );
             }
         } );
     },
-    "validateLogin": function validateLogin( username, password ){
-        /* eslint-disable no-console */
-        $.ajax(
-            "http://localhost:3000/test/login",
-            {
-                "username": username,
-                "password": password
+    "validateLogin": function validateLogin( user ){
+        var username = user.get( "username" );
+        var password = user.get( "password" );
+        var viewModel = this.viewModel;
+
+        $.ajax( {
+            "type": "GET",
+            "url": "http://localhost:3000/test/login",
+            "dataType": "json",
+            "headers": {
+                "Authorization": "Basic " + btoa( `${username}:${password}` )
             },
-            ( data ) => console.log( data )
-        );
+            "success": ( data ) => viewModel.trigger( "remove:login", data )
+        } );
     }
 } );
 
