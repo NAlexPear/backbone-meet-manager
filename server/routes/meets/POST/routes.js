@@ -46,7 +46,7 @@ module.exports = function handleUserPost( req, res ){
             }
 
             client.query(
-                "INSERT INTO meets(name, adminId, date) values($1, $2, $3)",
+                "INSERT INTO meets(name, adminid, date) values($1, $2, $3)",
                 [ data.name, data.adminId, data.date ]
             );
 

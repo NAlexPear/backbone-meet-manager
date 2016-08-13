@@ -59,7 +59,8 @@ var MeetListItemView = Epoxy.View.extend( {
 
             var data = {
                 "name": this.getNewMeetName(),
-                "date": date
+                "date": date,
+                "adminId": this.getAdminId()
             };
 
             event.preventDefault();
@@ -119,6 +120,9 @@ var MeetListItemView = Epoxy.View.extend( {
                     .text()
                     .replace( /[\r]+/g, "" )
                     .trim();
+    },
+    "getAdminId": function getAdminId(){
+        return window.location.pathname.split( "/" ).pop();
     }
 } );
 

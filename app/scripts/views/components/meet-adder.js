@@ -15,7 +15,8 @@ var MeetAdderView = Backbone.View.extend( {
         "submit form.add-meet": function submitMeet( event ){
             var model = new MeetModel( {
                 "name": this.$el.find( ".name" ).val(),
-                "date": this.$el.find( ".date" ).val()
+                "date": this.$el.find( ".date" ).val(),
+                "adminId": window.location.pathname.split( "/" ).pop()
             } );
 
             event.preventDefault();
